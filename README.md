@@ -108,3 +108,6 @@ Para llevar a cabo este desafío de manera eficiente, sigue estas recomendacione
 
 
 **¡Diviértete construyendo!** 🚀
+
+# Carlos Andres Diaz Mendez
+**GitHub Pages:** https://dsaw-2025-i.github.io/item-list-cdmendez25/
