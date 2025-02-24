@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmOrderBtn = document.getElementById("confirm-order");
     const orderModal = document.getElementById("order-modal");
     const newOrderBtn = document.getElementById("new-order");
+    const orderDetails = document.getElementById("modal-order-details");
+    const orderTotalElement = document.getElementById("modal-order-total");
 
     let cart = [];
 
@@ -41,35 +43,41 @@ document.addEventListener("DOMContentLoaded", () => {
             const productId = parseInt(productElement.dataset.id);
             const productName = productElement.querySelector(".product__name").textContent;
             const productPrice = parseFloat(productElement.dataset.price);
+            const productImage = productElement.querySelector("img").src;
             
             const existingItem = cart.find(item => item.id === productId);
             if (existingItem) {
                 existingItem.quantity++;
             } else {
-                cart.push({ id: productId, name: productName, price: productPrice, quantity: 1 });
+                cart.push({ id: productId, name: productName, price: productPrice, quantity: 1, image: productImage });
             }
             updateCart();
         }
     });
 
-    cartItems.addEventListener("click", event => {
-        const productId = parseInt(event.target.dataset.id);
-        const cartItem = cart.find(item => item.id === productId);
-
-        if (event.target.classList.contains("cart-item__increase")) {
-            cartItem.quantity++;
-        } else if (event.target.classList.contains("cart-item__decrease")) {
-            cartItem.quantity--;
-            if (cartItem.quantity === 0) {
-                cart = cart.filter(item => item.id !== productId);
-            }
-        } else if (event.target.classList.contains("cart-item__remove")) {
-            cart = cart.filter(item => item.id !== productId);
-        }
-        updateCart();
-    });
-
     confirmOrderBtn.addEventListener("click", () => {
+        orderDetails.innerHTML = "";
+        let total = 0;
+
+        cart.forEach(item => {
+            total += item.price * item.quantity;
+            const orderItem = document.createElement("div");
+            orderItem.classList.add("modal__order-item");
+            orderItem.innerHTML = `
+                <div class="modal__order-item-content" style="display: flex; align-items: center; gap: 10px;">
+                    <img src="${item.image}" alt="${item.name}" class="modal__order-image" style="width: 50px; height: 50px; border-radius: 5px; object-fit: cover;">
+                    <div style="display: grid; grid-template-columns: auto auto; gap: 5px; align-items: center;">
+                        <p class="modal__order-name" style="font-weight: bold;">${item.name}</p>
+                        <p class="modal__order-quantity">Qty: ${item.quantity}</p>
+                        <p class="modal__order-price">Unit: $${item.price.toFixed(2)}</p>
+                        <p class="modal__order-total-item" style="font-weight: bold;">Total: $${(item.price * item.quantity).toFixed(2)}</p>
+                    </div>
+                </div>
+            `;
+            orderDetails.appendChild(orderItem);
+        });
+        
+        orderTotalElement.innerHTML = `<strong>Order Total:</strong> $${total.toFixed(2)}`;
         orderModal.classList.add("visible");
     });
 
@@ -77,6 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
         cart = [];
         updateCart();
         orderModal.classList.remove("visible");
+        orderDetails.innerHTML = "";
+        orderTotalElement.innerHTML = "";
     });
 
     updateCart();

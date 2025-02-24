@@ -75,14 +75,17 @@ body {
     background: hsl(12, 20%, 44%);
 }
 
-/* Cart Section */
 .cart {
     flex: 1;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 350px;
 }
 
 .cart__title {
@@ -90,18 +93,53 @@ body {
     font-weight: bold;
     margin-bottom: 10px;
     color: hsl(14, 86%, 42%);
+    text-align: center;
 }
 
 .cart__items {
-    max-height: 300px;
+    max-height: 250px;
     overflow-y: auto;
     padding: 10px;
     border-top: 1px solid hsl(14, 25%, 72%);
     border-bottom: 1px solid hsl(14, 25%, 72%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: hsl(14, 100%, 96%);
+}
+
+.cart-item__details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.cart-item__controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .cart__summary {
-    margin-top: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .cart__confirm {
@@ -121,7 +159,6 @@ body {
     background-color: hsl(12, 20%, 44%);
 }
 
-/* Modal */
 .modal {
     position: fixed;
     top: 0;
@@ -164,8 +201,6 @@ body {
 .modal__close:hover, .modal__close:focus {
     background-color: hsl(12, 20%, 44%);
 }
-
-/* Responsive Design */
 @media (max-width: 1024px) {
     .container {
         flex-direction: column;
